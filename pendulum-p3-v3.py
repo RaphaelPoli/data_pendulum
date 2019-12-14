@@ -1011,7 +1011,7 @@ while not ennd:
 							coef_dspl=math.fabs(180*motion2/float(500))
 						else:
 							coef_dspl=180
-						wide_coef_dspl=math.fabs(180*mean(wide_coef_data)/float(300))
+						wide_coef_dspl=180*mean(wide_coef_data)/float(222)
 						inter_coef_dspl=180*coef_inter/float(555)
 						
 						if inter_coef_dspl>0:
@@ -1026,6 +1026,7 @@ while not ennd:
 							color_mean=(0,255,0)	
 						if wide_coef_dspl<0:
 							color_mean=(255,0,0)	
+							wide_coef_dspl=-wide_coef_dspl
 						if wide_coef_dspl==0:
 							color_mean=(0,0,0)
 					
