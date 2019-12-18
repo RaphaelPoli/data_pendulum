@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 #
 
+# push r to record 7 seconds and analyse automatically
+# push q to quit
+
+
 #now truth should be the coef calculated from line equation
 #
 from sklearn.linear_model import LinearRegression
@@ -28,10 +32,10 @@ import os
 
 from collections import OrderedDict
 
-		
-	# this is to get system date 
-import datetime
 
+
+##---------------------------------------------used procedures
+		
 
 def gon_dot(dot_center,nsides, radius, dot1_angle, direction, i):
 	dot1_angle=math.radians(dot1_angle)
@@ -574,6 +578,7 @@ print (available)
 
 ennd=False
 
+#----------------------------------------------------------------program loop
 
 while not ennd:
 	long_term_rec=True
@@ -730,7 +735,7 @@ while not ennd:
 	hi_in_low_params=[500,14,100]#milliseconds (100-1000), number of recordings (64-7), length of sample (5-100)
 	screen = pygame.display.set_mode((400,270))
 
-	 # attention le modèle linéaire a plus d'inertie que la courbe affichée
+	# attention le modèle linéaire a plus d'inertie que la courbe affichée
 	# j'ai essayé de baisser le pendulum lever en dessous de 5 mais je ressens plus de justesse à ce chiffre
 	#-------------------------------------------------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------------------------------------------------
@@ -1216,7 +1221,7 @@ while not ennd:
 		if count>=max_count:
 				exti=True
 				
-				#-------------------------------------------------------------------------------------------------------
+				#----------------------------------------this is a copy paste of a data display program---------------------------------------------------------------
 
 
 	print ("now reading plot")
@@ -1529,6 +1534,3 @@ while not ennd:
 
 
 
-
-#lenovo#sudo chmod a+rw /dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_757303031393519130E1-if00
-#asus#sudo chmod a+rw /dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_757303031393519130E1-if00
