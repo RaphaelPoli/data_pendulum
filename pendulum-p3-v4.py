@@ -6,30 +6,27 @@
 #
 from sklearn.linear_model import LinearRegression
 calculate_lm=True
-
-import pygame
-from pygame.locals import *
-
-import keyboard
-import RPi.GPIO as GPIO
-import serial
-import time
-import pyexcel 
-from pyexcel_ods import get_data
-from pyexcel_ods import save_data
-from collections import OrderedDict
-import datetime
 from scipy.fftpack import fft
 import numpy as np #usually there by default
 import math
-import os
-import numpy
-import os
+import matplotlib.pyplot as plt
+
+
 import pyexcel 
 from pyexcel_ods import get_data
 from pyexcel_ods import save_data
 from collections import OrderedDict
-import matplotlib.pyplot as plt
+
+import serial
+
+import pygame
+from pygame.locals import *
+import keyboard
+
+import datetime
+import os
+
+from collections import OrderedDict
 
 		
 	# this is to get system date 
