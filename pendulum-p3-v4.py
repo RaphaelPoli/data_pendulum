@@ -4,7 +4,8 @@
 
 # push r to record 7 seconds and analyse automatically
 # push q to quit
-
+Device_adress='/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0'
+Device_adress='/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_75830333238351C0D101-if00'
 
 #now truth should be the coef calculated from line equation
 #
@@ -32,6 +33,43 @@ import os
 
 from collections import OrderedDict
 
+print ("int",int("0xaa",16))
+
+def hexcolor(string):#does not work on python3
+	print ("string",string)
+	red_s=string[0:2]
+	green_s=string[2:4]
+	blue_s=string[4:6]
+	print (red_s)
+	print (type(red_s))
+	red=int(red_s,16)/255.0
+	green=int(green_s,16)/255.0
+	blue=int(blue_s,16)/255.0
+	return (red,green,blue)
+	
+	
+	
+# new colors: bg 3d3d45
+#             light 808080
+#			  shade 2e2e36
+# 			  calming yes 365238
+#			  calming no  633636
+
+#Calming_yes=(54,82,56)#hexcolor("365238")
+#Calming_no=(99,54,54)#hexcolor("633636")
+#Background_color=(61,61,69)#hexcolor("3d3d45")
+#Truth_color=(128,128,128)#hexcolor("808080")
+#intensity_color=(153,69,00)#hexcolor("994500")
+#Resistance_color=(46,46,54)#hexcolor("2e2e36")
+
+
+
+Calming_yes=(64,92,68)#hexcolor("365238")
+Calming_no=(108,64,64)#hexcolor("633636")
+Background_color=(61,61,69)#hexcolor("3d3d45")
+Truth_color=(255,255,255)#hexcolor("808080")
+intensity_color=(153,69,00)#hexcolor("994500")
+Resistance_color=(0,0,0)#hexcolor("2e2e36")
 
 
 ##---------------------------------------------used procedures
@@ -43,6 +81,7 @@ def gon_dot(dot_center,nsides, radius, dot1_angle, direction, i):
 		dot_center[1] + radius * math.sin((dot1_angle+(2 * math.pi * i / float(nsides)*direction))))
 	return dot
 
+	
 
 def line_equation(a,b):
 	same_point=False
@@ -664,7 +703,7 @@ while not ennd:
 		
 	#works with an ino code uploaded into the arduino
 	#ser = serial.Serial('/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_757303031393519130E1-if00', bytesize=8,baudrate=9600, xonxoff=True, timeout=2)#other arduino (attacked)
-	ser = serial.Serial('/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_75830333238351C0D101-if00', bytesize=8,baudrate=9600, xonxoff=True, timeout=2)
+	ser = serial.Serial(Device_adress, bytesize=8,baudrate=9600, xonxoff=True, timeout=2)
 	#print format(ser)
 	count=0
 	wait=0
@@ -953,9 +992,9 @@ while not ennd:
 						
 						
 						if coef_amb_lm<0:
-							color_wdamb=(0,255,0)
+							color_wdamb=Calming_yes
 						if coef_amb_lm>0:
-							color_wdamb=(255,0,0)
+							color_wdamb=Calming_no
 						if coef_amb_lm==0:
 							color_wdamb=(0,0,0)
 						
@@ -1010,23 +1049,23 @@ while not ennd:
 							
 						inter_coef_dspl=180*coef_inter/float(555)
 						if inter_coef_dspl>0:
-							inter_color=(0,255,0)
+							inter_color=Truth_color#true
 						if inter_coef_dspl<0:
-							inter_color=(255,0,0)
+							inter_color=Resistance_color#false
 							inter_coef_dspl=-inter_coef_dspl
 						if inter_coef_dspl==0:
 							inter_color=(0,0,0)
 						
 						motion2=0
 						if current_coef>0:
-							color=(0,255,0)
+							color=Truth_color
 							motion2=math.fabs(current_coef)
 						if current_coef<0:
-							color=(255,0,0)
+							color=Resistance_color
 							motion2=math.fabs(current_coef)
 						if current_coef==0:
 							motion2=0
-							color=(0,0,0)
+							color=Background_color
 						if motion2<500:
 							coef_dspl=math.fabs(180*motion2/float(500))
 						else:
@@ -1159,7 +1198,7 @@ while not ennd:
 					
 		
 
-			screen.fill((0,0,0))
+			screen.fill(Background_color)
 			font = pygame.font.SysFont("liberationsans", 12)
 			truth = font.render("Now Truth", True, (255, 255, 0))
 			intensity=font.render("Now Intensity", True, (255, 255, 0))
@@ -1188,7 +1227,7 @@ while not ennd:
 			pygame.draw.line(screen,inter_color, (x-2,65-15), (x+inter_coef_dspl,65-15),30)
 			#pygame.draw.line(screen,color_mean, (x-2,90-10), (x+wide_coef_dspl,90-10),20)
 			
-			pygame.draw.line(screen,(255,255,0), (x-2,120-10), (x+ambitus_display_deg_3,120-10),20)
+			pygame.draw.line(screen,intensity_color, (x-2,120-10), (x+ambitus_display_deg_3,120-10),20)
 			pygame.draw.line(screen,color_wdamb, (x-2,150-10), (x+wide_ambitus_dspl, 150-10),20)
 			
 			
@@ -1205,9 +1244,9 @@ while not ennd:
 				l=l_max
 			for k in range(l):
 				if dspl_gradient[k]>0:
-					pygame.draw.line(screen,(0,255,0), (xvu-(width*(l_max/2.0))+(k*width),yvu), (xvu-(width*(l_max/2.0))+(k*width),yvu-dspl_gradient[k]),width)
+					pygame.draw.line(screen,Truth_color, (xvu-(width*(l_max/2.0))+(k*width),yvu), (xvu-(width*(l_max/2.0))+(k*width),yvu-dspl_gradient[k]),width)
 				if dspl_gradient[k]<0:
-					pygame.draw.line(screen,(255,0,0), (xvu-(width*(l_max/2.0))+(k*width),yvu), (xvu-(width*(l_max/2.0))+(k*width),yvu+dspl_gradient[k]),width)
+					pygame.draw.line(screen,Resistance_color, (xvu-(width*(l_max/2.0))+(k*width),yvu), (xvu-(width*(l_max/2.0))+(k*width),yvu+dspl_gradient[k]),width)
 			#draw.line(screen,(255,255,255), center_vu, gon_dot(center_vu,12,72/3.0,180+freq_display_deg,1,0), 1)
 			freq_display_deg_2=180*mean_freq/float(max_freq)
 			#draw.line(screen,(0,255,255), center_vu, gon_dot(center_vu,12,50*9/10.0,180+freq_display_deg_2,1,0), 1)
