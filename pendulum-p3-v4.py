@@ -1458,7 +1458,10 @@ while not ennd:
 	print ("general mean", general_mean)
 	print ("positive cf mean", mean(positive_cf))
 	print ("negative cf mean", mean(negative_cf))
-
+	len_positive=len(positive_cf)
+	len_negative=len(negative_cf)
+	print ("len positive",len(positive_cf))
+	print ("len negative",len(negative_cf))
 	print ()
 	if len(positive_cf)>0:
 		print ("positive cf maximum", max(positive_cf))
@@ -1488,7 +1491,7 @@ while not ennd:
 
 	print ("in short term")
 
-	if general_mean>0:
+	if len_positive>len_negative:
 		print ("rather yes, intensity", math.fabs(yes_intensity))
 		if math.fabs(yes_intensity)>10:
 			print("clear answer")
