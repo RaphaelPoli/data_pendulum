@@ -227,7 +227,7 @@ def plot_fft(integer_data, sample_framerate, sensitivity):
 	for item in yf:
 		y2f.append(np.abs(item)*2.0/float(N))#frequency list
 	#here regular spaces are created to sort y2f output
-	xf = np.linspace(0.0, 1.0/float(1000.0*T), N/8.0)#N/2 is the bandwidth that is to say the maximum detectable frequency
+	xf = np.linspace(0.0, 1.0/float(1000.0*T), int(N/8.0))#N/2 is the bandwidth that is to say the maximum detectable frequency
 	#with /500*T as interval and n/16 at bandwith, plant observation is fairly precise.
 	#with narrower bands (when the second argument is greater) the signal is more segmented, and so band averages are lower.
 	#also variations will be more important if there are less bands.
@@ -363,7 +363,7 @@ def plot_vibrato_fft(integer_data, sample_framerate, sensitivity):
 		y2f.append(np.abs(item)*2.0/float(N))#frequency list
 	#here regular spaces are created to sort y2f output
 	#print "N/2.0",N/2.0
-	xf = np.linspace(0.0, 1.0/float(10*T), N/2.0)#N/2 is the bandwidth that is to say the maximum detectable frequency
+	xf = np.linspace(0.0, 1.0/float(10*T), int(N/2.0))#N/2 is the bandwidth that is to say the maximum detectable frequency
 	#print xf
 	#with /500*T as interval and n/16 at bandwith, plant observation is fairly precise.
 	#with narrower bands (when the second argument is greater) the signal is more segmented, and so band averages are lower.
