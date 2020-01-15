@@ -1429,7 +1429,7 @@ while not ennd:
 	for dot in range(len(plott)):
 		#print (int(plott2[dot]))
 		if len(plott)!=1:
-			lx.append((dot+1*ambitus)/(len(plott)-1))
+			lx.append((dot+1*ambitus)/float(len(plott)-1))
 		else:
 			lx.append(1)
 
@@ -1439,7 +1439,12 @@ while not ennd:
 
 		if dot>0:
 			coefs_lines.append(line_equation((lx[dot-1],plott[dot-1]),(lx[dot],plott[dot]))[1])
-		
+	
+	
+	#replacing recalculated coefs by recorded coefs
+	coefs_lines=[]
+	for value in plott3:
+		coefs_lines.append(value)
 	print ("coefs",coefs_lines)
 
 
@@ -1489,21 +1494,22 @@ while not ennd:
 		else:
 			no_intensity=0
 
-	print ("in short term")
-
-	if len_positive>len_negative:
-		print ("rather yes, intensity", math.fabs(yes_intensity))
-		if math.fabs(yes_intensity)>10:
-			print("clear answer")
+	if math.fabs(len_positive-len_negative)<2:
+		print ("blurred answer by number")
 	else:
-		print ("rather no, intensity", math.fabs(no_intensity))
-		if math.fabs(no_intensity)>2:
-			print("clear answer")
-	print()
+		if len_positive>len_negative:
+			print ("rather yes, intensity (by max)", math.fabs(yes_intensity))
+			if math.fabs(yes_intensity)>10:
+				print("clear answer")
+		else:
+			print ("rather no, intensity (by max)", math.fabs(no_intensity))
+			if math.fabs(no_intensity)>2:
+				print("clear answer")
+		print()
 
 	if (general_mean>0 and general_mean<10) or (general_mean<0 and general_mean>-10):
 		blurred=True
-		print ("blurred answer")
+		print ("blurred answer (by mean)")
 		
 
 
