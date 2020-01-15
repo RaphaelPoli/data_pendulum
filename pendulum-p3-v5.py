@@ -1337,7 +1337,7 @@ while not ennd:
 	dateyear=int(datetime.datetime.strftime(datetime.datetime.now(),"%Y"))
 
 
-	print ("today",dateday, datemonth, dateyear)
+	#print ("today",dateday, datemonth, dateyear)
 
 
 	starttime=datetime.datetime(dateyear,datemonth,dateday,timehour_st,timeminute_st,00)
@@ -1445,7 +1445,7 @@ while not ennd:
 	coefs_lines=[]
 	for value in plott3:
 		coefs_lines.append(value)
-	print ("coefs",coefs_lines)
+	#print ("coefs",coefs_lines)
 
 
 	positive_cf=[]
@@ -1457,6 +1457,8 @@ while not ennd:
 			negative_cf.append(item)
 
 	print("-----------------------------------------------")
+	print("-----------------------------------------------")
+	print()
 
 	general_mean=mean(coefs_lines)
 
@@ -1470,13 +1472,26 @@ while not ennd:
 	print ()
 	if len(positive_cf)>0:
 		print ("positive cf maximum", max(positive_cf))
+	else:
+		print("no positive value")
 	if len(negative_cf)>0:
-		print ("negative cf maximum", min(negative_cf))
+		print ("negative cf minimum", min(negative_cf))
+	else:
+		print("no negative value")
 	print()
-
-	no_intensity=0
-	yes_intensity=0
-
+	print ("---------------------------------------------")
+	#initialising yes and no intensity
+	if len( negative_cf)>0:
+		no_intensity=math.fabs(min(negative_cf))
+	else:
+		no_intensity=0
+	if len(positive_cf)>0:
+		yes_intensity=math.fabs(max(positive_cf))
+	else:
+		yes_intensity=0
+	print()
+	
+	#precising yes and no intensity
 
 	if len(negative_cf)>0 and len(positive_cf)>0 and float(min(negative_cf))!=0:
 		yes_intensity=max(positive_cf)/ float(math.fabs(min(negative_cf)))
@@ -1494,17 +1509,29 @@ while not ennd:
 		else:
 			no_intensity=0
 
+
+
+
+	#choosing and displaying an answer
 	if math.fabs(len_positive-len_negative)<2:
 		print ("blurred answer by number")
 	else:
 		if len_positive>len_negative:
 			print ("rather yes, intensity (by max)", math.fabs(yes_intensity))
-			if math.fabs(yes_intensity)>10:
-				print("clear answer")
+			if math.fabs(yes_intensity)>2	:
+				print("clear answer (by max)")
+			if  math.fabs(yes_intensity)<1:
+				print("contradictions")
+			if math.fabs(yes_intensity)>50:
+				print("very clear answer (by max)")
 		else:
 			print ("rather no, intensity (by max)", math.fabs(no_intensity))
 			if math.fabs(no_intensity)>2:
-				print("clear answer")
+				print("clear answer (by max)")
+			if  math.fabs(no_intensity)<1:
+				print("contradictions")
+			if math.fabs(no_intensity)>50:
+				print("very clear answer (by max)")
 		print()
 
 	if (general_mean>0 and general_mean<10) or (general_mean<0 and general_mean>-10):
@@ -1516,7 +1543,7 @@ while not ennd:
 	print("-----------------------------------------------")
 
 
-
+	print("-----------------------------------------------")
 
 	#positive_lm=[]
 	#negative_lm=[]
@@ -1527,7 +1554,6 @@ while not ennd:
 	#	else:
 	#		negative_lm.append(item)
 
-	print("-----------------------------------------------")
 	#print ("positive lm mean", mean(positive_lm))
 	#print ("negative lm mean", mean(negative_lm))
 
@@ -1571,10 +1597,10 @@ while not ennd:
 
 
 	#displaying lm of lm pure value
-	ax=plt.figure()
-	plt.rcParams['axes.facecolor']='#555555'
-	plt.plot(plott2,plott, color="#55ee55")
-	plt.fill_between(plott2,plott, color="#33bb99")
+	#ax=plt.figure()
+	#plt.rcParams['axes.facecolor']='#555555'
+	#plt.plot(plott2,plott, color="#55ee55")
+#	plt.fill_between(plott2,plott, color="#33bb99")
 	
 	ax2=plt.figure()
 	plt.rcParams['axes.facecolor']='#555555'
